@@ -10,8 +10,8 @@ import {
 const Lives = async () => {
   const livesData = await getLives();
   return (
-    <section className="pt-6 mb-3">
-      <div className="container">
+    <section className="pt-6  z-50">
+      <div className="container ">
         <MainHeading title="Lives Only" />
         <Carousel className="w-full">
           <CarouselContent className="-ml-1">

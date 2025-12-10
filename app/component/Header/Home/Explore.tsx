@@ -5,7 +5,6 @@ import liverpool from "@/assets/liverpool.jpg";
 
 const Explore = async () => {
   const exploreData = await getExplories();
-  console.log(exploreData);
 
   return (
     <section className="pt-6">
