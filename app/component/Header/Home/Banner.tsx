@@ -1,6 +1,6 @@
 import Image from "next/image";
-import BannerImage from "@/assets/banner-img.jpg";
 import { Button } from "@/components/ui/button";
+import Link from "next/link";
 const Banner = () => {
   return (
     <div className="relative h-[300px] sm:h-[400px] lg:h-[500px] xl:h-[500px] ">
@@ -13,8 +13,14 @@ const Banner = () => {
         fill
       />
       <div className="absolute top-1/2 w-full text-center space-y-3 ">
-        <p className="text-sm sm:text-lg  font-bold">Not Sure where to go? Perfect.</p>
-        <Button className="rounded-full shadow-md! px-9 cursor-pointer">I am flexible</Button>
+        <p className="text-sm sm:text-lg  font-bold">
+          Not Sure where to go? Perfect.
+        </p>
+        <Link href={"/search"}>
+          <Button className="rounded-full shadow-md! px-9 cursor-pointer">
+            I am flexible
+          </Button>
+        </Link>
       </div>
     </div>
   );

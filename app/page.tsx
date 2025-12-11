@@ -1,3 +1,5 @@
+import Footer from "./component/Footer/Footer";
+import Header from "./component/Header/Header";
 import Banner from "./component/Header/Home/Banner";
 import Explore from "./component/Header/Home/Explore";
 import GreatoutDoors from "./component/Header/Home/GreatoutDoors";
@@ -6,6 +8,7 @@ import Lives from "./component/Header/Home/Lives";
 export default function Home() {
   return (
     <main>
+      <Header />
       <Banner />
       <Explore />
       <Lives />
@@ -15,6 +18,7 @@ export default function Home() {
         desc="Wishlists curated by Airbnb"
         linkText="Get Inspired"
       />
+      <Footer />
     </main>
   );
 }

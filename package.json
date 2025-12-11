@@ -11,18 +11,25 @@
   "dependencies": {
     "@radix-ui/react-slot": "^1.2.4",
     "@types/react-date-range": "^1.4.10",
+    "@types/react-map-gl": "^6.1.7",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "date-fns": "^4.1.0",
     "embla-carousel-react": "^8.6.0",
+    "geo-lib": "^0.4.0",
+    "geolib": "^3.3.4",
     "heroicons": "^2.2.0",
     "lucide-react": "^0.556.0",
+    "mapbox-gl": "^3.17.0",
     "next": "16.0.7",
+    "nextjs-toploader": "^3.9.17",
     "react": "^19.2.0",
     "react-date-range": "^2.0.1",
     "react-dom": "19.2.0",
+    "react-map-gl": "^8.1.0",
     "tailwind-merge": "^3.4.0",
-    "tailwindcss-animate": "^1.0.7"
+    "tailwindcss-animate": "^1.0.7",
+    "zustand": "^5.0.9"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",

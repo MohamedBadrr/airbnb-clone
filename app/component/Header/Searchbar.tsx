@@ -7,10 +7,14 @@ import "react-date-range/dist/theme/default.css"; // theme css file
 import { enUS } from "date-fns/locale";
 import { format, isSameDay } from "date-fns";
 import { Button } from "@/components/ui/button";
+import useStore from "@/store/store";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 const Searchbar = ({ placeholder }: { placeholder?: string }) => {
   const [search, setSearch] = useState("");
-  const [typeReervation, setTypeReservation] = useState("range");
+  const router = useRouter();
+  const { updateField } = useStore();
+  const [typeReservation, setTypeReservation] = useState("range");
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
   const [selectedDates, setSelectedDates] = useState<Date[]>([]);
@@ -46,6 +50,18 @@ const Searchbar = ({ placeholder }: { placeholder?: string }) => {
       setSelectedDates([...selectedDates, date]);
     }
   };
+
+  const handleOnSave = () => {
+    setSearch("");
+    updateField("startDate", startDate);
+    updateField("endDate", endDate);
+    updateField("location", search);
+    updateField("customDates", selectedDates);
+    updateField("numOfGuests", numOfGuests);
+    updateField("typeOfReservation", typeReservation);
+    setSearch("");
+    router.push("/search");
+  };
   return (
     <>
       <div className="flex items-center md:border-2 rounded-full py-2 md:shadow-sm">
@@ -65,19 +81,19 @@ const Searchbar = ({ placeholder }: { placeholder?: string }) => {
         />
       </div>
       {search && (
-        <div className="absolute w-[558px]  items-center justify-center flex flex-col top-[110%] left-[50%] translate-x-[-50%]">
+        <div className="absolute w-[110%]! bg-white  items-center justify-center flex flex-col top-[110%] left-[50%] translate-x-[-50%]">
           <div className="flex items-center w-full pb-1 ">
             {/* buttons */}
-            <div className=" w-full flex items-center justify-between">
+            <div className=" w-full gap-4 flex items-center justify-center my-3">
               <div
                 onClick={() => {
                   setTypeReservation("range");
                 }}
                 className={`${
-                  typeReervation === "range"
+                  typeReservation === "range"
                     ? " bg-[#ff5a5f] "
                     : "border border-primary"
-                } w-full items-center justify-center flex  rounded-full py-2 cursor-pointer `}
+                } w-1/4 items-center justify-center flex  rounded-full py-2 cursor-pointer `}
               >
                 Range Of Days
               </div>
@@ -86,17 +102,17 @@ const Searchbar = ({ placeholder }: { placeholder?: string }) => {
                   setTypeReservation("custom");
                 }}
                 className={`${
-                  typeReervation === "custom"
+                  typeReservation === "custom"
                     ? " bg-primary "
                     : "border border-primary"
-                } w-full items-center justify-center flex  rounded-full py-2 cursor-pointer`}
+                }  items-center w-1/4 justify-center flex  rounded-full py-2 cursor-pointer`}
               >
                 Custom Days
               </div>
             </div>
           </div>
 
-          {typeReervation === "range" ? (
+          {typeReservation === "range" ? (
             <DateRangePicker
               ranges={[selectionRange]}
               onChange={handleSelectRange}
@@ -133,24 +149,36 @@ const Searchbar = ({ placeholder }: { placeholder?: string }) => {
             <Button
               type="button"
               variant={"outline"}
-              className="grow cursor-pointer"
+              className="grow cursor-pointer w-full"
               onClick={() => setSearch("")}
             >
               Cancel
             </Button>
-            <Button className="grow cursor-pointer">
-              <Link
-                // href={{
-                //   pathname: "/",
-                //   // search: `?location=${input}&startDate=${startDate.toISOString()}&endDate=${endDate.toISOString()}&numOfGuests=${numOfGuests}`,
-                // }}
-                href={"/"}
-                onClick={() => setSearch("")}
-                className=" "
+
+            <Link
+              href={{
+                pathname: "/search",
+                query: {
+                  location: search,
+                  startDate: startDate.toISOString(),
+                  endDate: endDate.toISOString(),
+                  numOfGuests: numOfGuests,
+                  typeOfReservation: typeReservation,
+                  customDates: JSON.stringify(
+                    selectedDates.map((d) => d.toISOString())
+                  ),
+                },
+              }}
+              onClick={handleOnSave}
+              className="grow cursor-pointer text-red-400 w-full"
+            >
+              <Button
+                onClick={handleOnSave}
+                className="grow cursor-pointer w-full"
               >
                 Save
-              </Link>
-            </Button>
+              </Button>
+            </Link>
           </div>
         </div>
       )}
