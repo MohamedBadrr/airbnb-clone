@@ -92,7 +92,7 @@ const SearchResults = async ({
               </div>
             </div>
             <div className="hidden xl:inline-flex xl:min-w-[600px]">
-              {/* <Map searchResultData={searchResultData} /> */}
+              <Map searchResultData={searchResultData} />
             </div>
           </div>
         </section>

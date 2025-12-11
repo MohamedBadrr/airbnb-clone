@@ -1,5 +1,5 @@
 "use client";
-import { SearchIcon, UsersIcon } from "lucide-react";
+import { SearchIcon } from "lucide-react";
 import { useState } from "react";
 import { Calendar, DateRangePicker, RangeKeyDict } from "react-date-range";
 import "react-date-range/dist/styles.css"; // main style file
@@ -10,6 +10,8 @@ import { Button } from "@/components/ui/button";
 import useStore from "@/store/store";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import ReservationTypeTabs from "./ReservationTypeTabs";
+import GuestsSelector from "./GuestsSelector";
 const Searchbar = ({ placeholder }: { placeholder?: string }) => {
   const [search, setSearch] = useState("");
   const router = useRouter();
@@ -82,35 +84,10 @@ const Searchbar = ({ placeholder }: { placeholder?: string }) => {
       </div>
       {search && (
         <div className="absolute w-[110%]! bg-white  items-center justify-center flex flex-col top-[110%] left-[50%] translate-x-[-50%]">
-          <div className="flex items-center w-full pb-1 ">
-            {/* buttons */}
-            <div className=" w-full gap-4 flex items-center justify-center my-3">
-              <div
-                onClick={() => {
-                  setTypeReservation("range");
-                }}
-                className={`${
-                  typeReservation === "range"
-                    ? " bg-[#ff5a5f] "
-                    : "border border-primary"
-                } w-1/4 items-center justify-center flex  rounded-full py-2 cursor-pointer `}
-              >
-                Range Of Days
-              </div>
-              <div
-                onClick={() => {
-                  setTypeReservation("custom");
-                }}
-                className={`${
-                  typeReservation === "custom"
-                    ? " bg-primary "
-                    : "border border-primary"
-                }  items-center w-1/4 justify-center flex  rounded-full py-2 cursor-pointer`}
-              >
-                Custom Days
-              </div>
-            </div>
-          </div>
+          <ReservationTypeTabs
+            typeReservation={typeReservation}
+            setTypeReservation={setTypeReservation}
+          />
 
           {typeReservation === "range" ? (
             <DateRangePicker
@@ -119,6 +96,7 @@ const Searchbar = ({ placeholder }: { placeholder?: string }) => {
               locale={enUS}
               rangeColors={["#ff5a5f"]}
               minDate={new Date()}
+              className="flex flex-col-reverse! md:flex-row! items-center! px-2! my-2! border-b-2 justify-center!"
             />
           ) : (
             <div className="w-full bg-white flex items-center justify-center">
@@ -133,19 +111,12 @@ const Searchbar = ({ placeholder }: { placeholder?: string }) => {
             </div>
           )}
 
-          <div className="w-full flex items-center border-b bg-white p-4">
-            <h2 className="text-2xl grow font-semibold">Number of Guests :</h2>
-            <UsersIcon className="h-5" />
-            <input
-              type="number"
-              className="w-12 pl-2 text-lg outline-none text-primary"
-              value={numOfGuests}
-              min={1}
-              onChange={(e) => setNumOfGuests(Number(e.target.value))}
-            />
-          </div>
+          <GuestsSelector
+            numOfGuests={numOfGuests}
+            setNumOfGuests={setNumOfGuests}
+          />
 
-          <div className="flex gap-3 items-center w-full bg-white p-5">
+          <div className="flex gap-3 items-center  bg-white p-5">
             <Button
               type="button"
               variant={"outline"}
